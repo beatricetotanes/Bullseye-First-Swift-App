@@ -46,7 +46,7 @@ struct ContentView: View {
       // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
       .alert(isPresented: $alertIsVisible, content: {
         var roundedValue: Int = Int(self.sliderValue.rounded())
-        // returns what alert we want to show
+        // returns what alert we want to show;
         // For dismissButton, it wants us to return an alert button
         return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue)."), dismissButton: //.default returns an Alert Button
             .default(Text("Awesome")))
