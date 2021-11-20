@@ -15,6 +15,7 @@ struct ContentView: View {
   // Each state variable will always have an initial value
   @State private var alertIsVisible: Bool = false
   @State private var sliderValue: Double = 50.0
+  @State private var game: Game = Game()
   
   var body: some View {
     VStack {
@@ -25,7 +26,7 @@ struct ContentView: View {
         .lineSpacing(4)
         .font(.footnote)
       
-      Text("89")
+      Text(String(game.target))
         .font(.largeTitle)
         .kerning(-1.0)
         .fontWeight(.black)
@@ -48,7 +49,7 @@ struct ContentView: View {
         var roundedValue: Int = Int(self.sliderValue.rounded())
         // returns what alert we want to show;
         // For dismissButton, it wants us to return an alert button
-        return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue)."), dismissButton: //.default returns an Alert Button
+        return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue). \n" + "You scored \(self.game.points(sliderValue: roundedValue)) points this round"), dismissButton: //.default returns an Alert Button
             .default(Text("Awesome")))
       })
     }
