@@ -45,9 +45,10 @@ struct ContentView: View {
       // isPresented keeps track whether the alert is visible or not
       // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
       .alert(isPresented: $alertIsVisible, content: {
+        var roundedValue: Int = Int(self.sliderValue.rounded())
         // returns what alert we want to show
         // For dismissButton, it wants us to return an alert button
-        return Alert(title: Text("Hello There"), message: Text("This is my first pop-up"), dismissButton: //.default returns an Alert Button
+        return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue)."), dismissButton: //.default returns an Alert Button
             .default(Text("Awesome")))
       })
     }
@@ -66,5 +67,5 @@ struct ContentView_Previews: PreviewProvider {
 /*
  NOTES
 - Bindings will always tie a particular user interface view to a particular state value
- 
+- To insert code in a string use "\(put var here")"
  */
