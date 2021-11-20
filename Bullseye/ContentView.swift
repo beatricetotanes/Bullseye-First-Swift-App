@@ -9,6 +9,11 @@ import SwiftUI
 
 // Main view of the app
 struct ContentView: View {
+  
+  // @State is a special keyword stating that this is a state variable
+  // Whenever a state variable changes, SwiftUI will automatically recompute the body
+  // Each state variable will always have an initial value
+  @State private var alertIsVisible: Bool = false
   var body: some View {
     VStack {
       Text("🎯🎯🎯\nPUT THE BULLSEYE AS CLOSE AS YOU CAN TO ")
@@ -29,9 +34,20 @@ struct ContentView: View {
         Text("100")
           .bold()
       }
-      Button(action: {}) {
+      Button(action: {
+        print("Hello")
+        self.alertIsVisible = true
+      }) {
         Text("Hit Me")
       }
+      // isPresented keeps track whether the alert is visible or not
+      // There is a '$' before 'alertIsVisible' to convert the state variable into a binding into a state variable
+      .alert(isPresented: $alertIsVisible, content: {
+        // returns what alert we want to show
+        // For dismissButton, it wants us to return an alert button
+        return Alert(title: Text("Hello There"), message: Text("This is my first pop-up"), dismissButton: //.default returns an Alert Button
+            .default(Text("Awesome")))
+      })
     }
   }
 }
