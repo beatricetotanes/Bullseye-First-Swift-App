@@ -14,7 +14,7 @@ struct ContentView: View {
   // Whenever a state variable changes, SwiftUI will automatically recompute the body
   // Each state variable will always have an initial value
   @State private var alertIsVisible: Bool = false
-  @State private var knockIsVisible: Bool = false
+  @State private var sliderValue: Double = 50.0
   
   var body: some View {
     VStack {
@@ -32,7 +32,7 @@ struct ContentView: View {
       HStack {
         Text("1")
           .bold()
-        Slider(value: .constant(50.0), in: 1.0...100.0)
+        Slider(value: self.$sliderValue, in: 1.0...100.0)
         Text("100")
           .bold()
       }
@@ -43,18 +43,12 @@ struct ContentView: View {
         Text("Hit Me")
       }
       // isPresented keeps track whether the alert is visible or not
-      // There is a '$' before 'alertIsVisible' to convert the state variable into a binding into a state variable
+      // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
       .alert(isPresented: $alertIsVisible, content: {
         // returns what alert we want to show
         // For dismissButton, it wants us to return an alert button
         return Alert(title: Text("Hello There"), message: Text("This is my first pop-up"), dismissButton: //.default returns an Alert Button
             .default(Text("Awesome")))
-      })
-      Button(action: {self.knockIsVisible = true}) {
-        Text("Knock knock")
-      }
-      .alert(isPresented: $knockIsVisible, content: {
-        return Alert(title: Text("Who's There?"), message: Text("Little Old Lady"), dismissButton: .default(Text("Little old lady who?")))
       })
     }
   }
@@ -68,3 +62,9 @@ struct ContentView_Previews: PreviewProvider {
       .previewLayout(.fixed(width: 568, height: 320))
   }
 }
+
+/*
+ NOTES
+- Bindings will always tie a particular user interface view to a particular state value
+ 
+ */
