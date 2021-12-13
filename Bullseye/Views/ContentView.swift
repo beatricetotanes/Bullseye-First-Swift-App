@@ -22,13 +22,14 @@ struct ContentView: View {
   // It can mean that it can be an instance that isn't exactly like a view but it has the same properties and methods as View.
   var body: some View {
     VStack {
-      Text("🎯🎯🎯\nPUT THE BULLSEYE AS CLOSE AS YOU CAN TO ")
+      Text("🎯🎯🎯\nPut the Bullseye as close as you can to".uppercased())
         .bold()
         .kerning(2.0)
         .multilineTextAlignment(.center)
-        .lineSpacing(4)
+        .lineSpacing(4.0)
         .font(.footnote)
-      
+        .padding(.leading, 30.0)
+        .padding(.trailing, 30.0)
       Text(String(game.target))
         .font(.largeTitle)
         .kerning(-1.0)
@@ -40,12 +41,19 @@ struct ContentView: View {
         Text("100")
           .bold()
       }
+      .padding()
       Button(action: {
         print("Hello")
         alertIsVisible = true
       }) {
-        Text("Hit Me")
+        Text("Hit Me".uppercased())
+          .bold()
+          .font(.title3)
       }
+      .padding(20.0)
+      .background(Color.blue)
+      .foregroundColor(.white)
+      .cornerRadius(21)
       // isPresented keeps track whether the alert is visible or not
       // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
       .alert(isPresented: $alertIsVisible, content: {
