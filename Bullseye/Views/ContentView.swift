@@ -32,61 +32,76 @@ struct ContentView: View {
     Color("BackgroundColor") // from asset catalog
         .edgesIgnoringSafeArea(.all)
       VStack {
-        Text("🎯🎯🎯\nPut the Bullseye as close as you can to".uppercased())
-          .foregroundColor(Color("TextColor"))
-          .bold()
-          .kerning(2.0)
-          .multilineTextAlignment(.center)
-          .lineSpacing(4.0)
-          .font(.footnote)
-          .padding(.leading, 30.0)
-          .padding(.trailing, 30.0)
-          
-        Text(String(game.target))
-          .foregroundColor(Color("TextColor"))
-          .font(.largeTitle)
-          .kerning(-1.0)
-          .fontWeight(.black)
-        HStack {
-          Text("1")
-            .foregroundColor(Color("TextColor"))
-            .bold()
-          Slider(value: $sliderValue, in: 1.0...100.0)
-          Text("100")
-            .foregroundColor(Color("TextColor"))
-            .bold()
-        }
-        .padding()
-        Button(action: {
-          print("Hello")
-          alertIsVisible = true
-        }) {
-          Text("Hit Me".uppercased())
-            .bold()
-            .font(.title3)
-        }
-        .padding(20.0)
-        .background(
-          // implements the gradient via a zstack
-          ZStack {
-            Color("ButtonColor")
-            LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.3), Color.clear]), startPoint: .top, endPoint: .bottom) // on top of the bgcolor
-          }
-        )
-        .foregroundColor(.white)
-        .cornerRadius(21)
-        // isPresented keeps track whether the alert is visible or not
-        // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
-        .alert(isPresented: $alertIsVisible, content: {
-          let roundedValue = Int(sliderValue.rounded())
-          // returns what alert we want to show;
-          // For dismissButton, it wants us to return an alert button
-          return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue). \n" + "You scored \(game.points(sliderValue: roundedValue)) points this round"), dismissButton: //.default returns an Alert Button
-              .default(Text("Awesome")))
-        })
+        InstructionsView(game: $game)
+        SliderView(sliderValue: $sliderValue)
+        HitMeButton(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+        
       }
     }
   }
+}
+
+struct InstructionsView: View {
+  // binding to access/reference state variable
+  // no initialization because it will be passed down
+  @Binding var game: Game
+  
+  var body: some View{
+    VStack {
+      InstructionText(text: "🎯🎯🎯\nPut the Bullseye as close as you can to")
+        .padding(.leading, 30.0)
+        .padding(.trailing, 30.0)
+      BigNumberText(text: String(game.target))
+    }
+  }
+}
+
+struct SliderView: View {
+  @Binding var sliderValue: Double
+  
+  var body: some View{
+    HStack {
+      SliderLabelText(text: "1")
+      Slider(value: $sliderValue, in: 1.0...100.0)
+      SliderLabelText(text: "100")
+    }.padding()
+  }
+}
+
+struct HitMeButton: View {
+  @Binding var alertIsVisible: Bool
+  @Binding var sliderValue: Double
+  @Binding var game: Game
+  
+  var body: some View{
+    Button(action: {
+      alertIsVisible = true
+    }) {
+      Text("Hit Me".uppercased())
+        .bold()
+        .font(.title3)
+    }
+    .padding(20.0)
+    .background(
+      // implements the gradient via a zstack
+      ZStack {
+        Color("ButtonColor")
+        LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.3), Color.clear]), startPoint: .top, endPoint: .bottom) // on top of the bgcolor
+      }
+    )
+    .foregroundColor(.white)
+    .cornerRadius(21)
+    // isPresented keeps track whether the alert is visible or not
+    // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
+    .alert(isPresented: $alertIsVisible, content: {
+      let roundedValue = Int(sliderValue.rounded())
+      // returns what alert we want to show;
+      // For dismissButton, it wants us to return an alert button
+      return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue). \n" + "You scored \(game.points(sliderValue: roundedValue)) points this round"), dismissButton: //.default returns an Alert Button
+                    .default(Text("Awesome")))
+    })
+  }
+  
 }
 
 // Controls the preview on the righthand side
