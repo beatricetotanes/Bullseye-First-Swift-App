@@ -91,6 +91,11 @@ struct HitMeButton: View {
     )
     .foregroundColor(.white)
     .cornerRadius(21)
+    // view that gets drawn on top of everything else; alternative to ZStack
+    .overlay(
+      RoundedRectangle(cornerRadius: 21)
+        .strokeBorder(Color.white, lineWidth: 2.0)
+    )
     // isPresented keeps track whether the alert is visible or not
     // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
     .alert(isPresented: $alertIsVisible, content: {
