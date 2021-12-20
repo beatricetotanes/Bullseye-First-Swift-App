@@ -33,6 +33,7 @@ struct ContentView: View {
         .edgesIgnoringSafeArea(.all)
       VStack {
         Text("🎯🎯🎯\nPut the Bullseye as close as you can to".uppercased())
+          .foregroundColor(Color("TextColor"))
           .bold()
           .kerning(2.0)
           .multilineTextAlignment(.center)
@@ -40,15 +41,19 @@ struct ContentView: View {
           .font(.footnote)
           .padding(.leading, 30.0)
           .padding(.trailing, 30.0)
+          
         Text(String(game.target))
+          .foregroundColor(Color("TextColor"))
           .font(.largeTitle)
           .kerning(-1.0)
           .fontWeight(.black)
         HStack {
           Text("1")
+            .foregroundColor(Color("TextColor"))
             .bold()
           Slider(value: $sliderValue, in: 1.0...100.0)
           Text("100")
+            .foregroundColor(Color("TextColor"))
             .bold()
         }
         .padding()
@@ -87,7 +92,8 @@ struct ContentView: View {
 // Controls the preview on the righthand side
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView() // default
+    ContentView()
+      .preferredColorScheme(.light) // default
     ContentView()
       .previewLayout(.fixed(width: 568, height: 320))
     ContentView()
