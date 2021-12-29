@@ -27,10 +27,11 @@ struct ContentView: View {
     ZStack {
       //rgb(243, 248, 253)
       // Swift wants values between zero to one so we convert the range
-      //Color(red: 243 / 255, green: 248 / 255, blue: 253 / 255) - one way to do this
+      // Color(red: 243 / 255, green: 248 / 255, blue: 253 / 255) - one way to do this
       // ignores safe area; safe area is where the battery, etc. goes at the top
-    Color("BackgroundColor") // from asset catalog
-        .edgesIgnoringSafeArea(.all)
+      //    Color("BackgroundColor") // from asset catalog
+      //        .edgesIgnoringSafeArea(.all)
+      BackgroundView(game: $game)
       VStack {
         InstructionsView(game: $game)
         SliderView(sliderValue: $sliderValue)
@@ -126,6 +127,6 @@ struct ContentView_Previews: PreviewProvider {
 
 /*
  NOTES
-- Bindings will always tie a particular user interface view to a particular state value
-- To insert code in a string use "\(put var here")"
+ - Bindings will always tie a particular user interface view to a particular state value
+ - To insert code in a string use "\(put var here")"
  */
