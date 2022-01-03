@@ -24,6 +24,7 @@ struct ContentView: View {
   var body: some View {
     // ZStack is like a VStack/HStack, and that stacks other views together, but in a Z order
     // -Z value is far away in the background while a +Z value would be in the foreground but they're all stacked on top of each other
+    // Whenever you put a view inside the ZStack, it centers that view within the ZStack
     ZStack {
       //rgb(243, 248, 253)
       // Swift wants values between zero to one so we convert the range
