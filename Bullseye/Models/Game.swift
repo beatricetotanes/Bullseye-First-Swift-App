@@ -14,7 +14,18 @@ struct Game {
   
   func points(sliderValue: Int) -> Int {
     // you can omit 'return' if you only have one line in the function
-    100 - abs(target - sliderValue)
+    let difference = abs(target - sliderValue)
+    let bonus: Int
+    
+    if difference == 0 {
+      bonus = 100
+    } else if difference <= 2{
+      bonus = 50
+    } else {
+      bonus = 0
+    }
+    
+    return 100 - difference + bonus
   }
   
   // use "mutating" because it indicates that the method will change the values on the struct itself
