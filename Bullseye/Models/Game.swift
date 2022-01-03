@@ -15,12 +15,12 @@ struct Game {
   func points(sliderValue: Int) -> Int {
     // you can omit 'return' if you only have one line in the function
     let difference = abs(target - sliderValue)
-    let bonus: Int
+    let bonus: Int // For bonus points
     
     if difference == 0 {
-      bonus = 100
+      bonus = 100 // Additional 100 points if the user hits target perfectly
     } else if difference <= 2{
-      bonus = 50
+      bonus = 50 // Additional 50 points if the user hits target so close
     } else {
       bonus = 0
     }
@@ -32,6 +32,11 @@ struct Game {
   mutating func startNewRound(points: Int) {
     round += 1
     score += points
+    target = Int.random(in: 1...100)
+  }
+  mutating func restart() {
+    round = 1
+    score = 0
     target = Int.random(in: 1...100)
   }
   
