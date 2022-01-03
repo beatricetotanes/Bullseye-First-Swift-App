@@ -18,7 +18,7 @@ struct BackgroundView: View {
     }
     .padding()
     .background(
-      Color("BackgroundColor").edgesIgnoringSafeArea(.all)
+      RingsView()
     )
   }
 }
@@ -62,6 +62,34 @@ struct BottomView: View {
       // Spacer extends to use as much space as available
       Spacer()
       NumberView(title: "Round", text: String(game.round))
+    }
+  }
+}
+
+struct RingsView: View {
+  
+  // To know whether user is using light/dark mode
+  // @Environment - environment property wrapper; to access the environment the views are in
+  // Format: @Environment(\.keyPath) var propertyName
+  // Key path is a special name defined by apple for each environment property
+  @Environment(\.colorScheme) var colorScheme
+  
+  var body: some View{
+    ZStack{
+      Color("BackgroundColor").edgesIgnoringSafeArea(.all)
+      //ForEach allows you to create a view for each element in the range
+      // "ring" will be the value in the sequence we're currently in;
+      // Ex: The 1st time we go into ForEach, "ring" will be 1.
+      ForEach(1..<6){ ring in
+        let size = CGFloat(ring * 100) //CGFloat since ".frame" wants this type instead of Int or Double
+        let opacity = colorScheme == .dark ? 0.1 : 0.3
+        Circle()
+          .stroke(lineWidth: 20)
+          .fill(
+            RadialGradient(gradient:  Gradient(colors: [Color("RingsColor").opacity(opacity), Color("RingsColor").opacity(0)]), center: .center, startRadius: 100, endRadius: 300)
+          )
+          .frame(width: size, height: size)
+      }
     }
   }
 }
