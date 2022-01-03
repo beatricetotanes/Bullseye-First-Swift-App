@@ -101,10 +101,16 @@ struct HitMeButton: View {
     // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
     .alert(isPresented: $alertIsVisible, content: {
       let roundedValue = Int(sliderValue.rounded())
+      let points = (game.points(sliderValue: roundedValue))
       // returns what alert we want to show;
       // For dismissButton, it wants us to return an alert button
-      return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue). \n" + "You scored \(game.points(sliderValue: roundedValue)) points this round"), dismissButton: //.default returns an Alert Button
-                    .default(Text("Awesome")))
+      return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue). \n" + "You scored \(points) points this round"), dismissButton: //.default returns an Alert Button
+                    .default(Text("Awesome")){
+                      // code that runs after the user taps the dismiss button
+                      game.startNewRound(points: points)
+                    }
+      
+      )
     })
   }
   

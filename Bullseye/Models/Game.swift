@@ -17,4 +17,11 @@ struct Game {
     100 - abs(target - sliderValue)
   }
   
+  // use "mutating" because it indicates that the method will change the values on the struct itself
+  mutating func startNewRound(points: Int) {
+    round += 1
+    score += points
+    target = Int.random(in: 1...100)
+  }
+  
 }
