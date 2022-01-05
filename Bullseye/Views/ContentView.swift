@@ -35,10 +35,19 @@ struct ContentView: View {
       BackgroundView(game: $game)
       VStack {
         InstructionsView(game: $game)
-          .padding(.bottom, 100)
-        HitMeButton(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+          .padding(.bottom, alertIsVisible ? CGFloat(0) : 100)
+        if alertIsVisible{
+          PointsView(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+            .transition(.scale)
+        } else {
+          HitMeButton(alertIsVisible: $alertIsVisible, sliderValue: $sliderValue, game: $game)
+            .transition(.scale)
+        }
       }
-      SliderView(sliderValue: $sliderValue)
+      if !alertIsVisible{
+        SliderView(sliderValue: $sliderValue)
+          .transition(.scale)
+      }
     }
   }
 }
@@ -77,7 +86,10 @@ struct HitMeButton: View {
   
   var body: some View{
     Button(action: {
-      alertIsVisible = true
+      // When this happens, we want to apply animation.
+      withAnimation {
+        alertIsVisible = true
+      }
     }) {
       Text("Hit Me".uppercased())
         .bold()
@@ -100,19 +112,20 @@ struct HitMeButton: View {
     )
     // isPresented keeps track whether the alert is visible or not
     // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
-    .alert(isPresented: $alertIsVisible, content: {
-      let roundedValue = Int(sliderValue.rounded())
-      let points = (game.points(sliderValue: roundedValue))
-      // returns what alert we want to show;
-      // For dismissButton, it wants us to return an alert button
-      return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue). \n" + "You scored \(points) points this round"), dismissButton: //.default returns an Alert Button
-                    .default(Text("Awesome")){
-                      // code that runs after the user taps the dismiss button
-                      game.startNewRound(points: points)
-                    }
-      
-      )
-    })
+    // default alert
+    //    .alert(isPresented: $alertIsVisible, content: {
+    //      let roundedValue = Int(sliderValue.rounded())
+    //      let points = (game.points(sliderValue: roundedValue))
+    //      // returns what alert we want to show;
+    //      // For dismissButton, it wants us to return an alert button
+    //      return Alert(title: Text("Hello There"), message: Text("The slider's value is \(roundedValue). \n" + "You scored \(points) points this round"), dismissButton: //.default returns an Alert Button
+    //                    .default(Text("Awesome")){
+    //                      // code that runs after the user taps the dismiss button
+    //                      game.startNewRound(points: points)
+    //                    }
+    //
+    //      )
+    //    })
   }
   
 }
