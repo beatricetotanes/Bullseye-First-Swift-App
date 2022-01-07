@@ -104,11 +104,11 @@ struct HitMeButton: View {
       }
     )
     .foregroundColor(.white)
-    .cornerRadius(21)
+    .cornerRadius(Constants.General.roundRectCornerRadius)
     // view that gets drawn on top of everything else; alternative to ZStack
     .overlay(
-      RoundedRectangle(cornerRadius: 21)
-        .strokeBorder(Color.white, lineWidth: 2.0)
+      RoundedRectangle(cornerRadius: Constants.General.roundRectCornerRadius)
+        .strokeBorder(Color.white, lineWidth: Constants.General.strokeWidth)
     )
     // isPresented keeps track whether the alert is visible or not
     // There is a '$' before 'alertIsVisible' to convert the state variable into a binding
