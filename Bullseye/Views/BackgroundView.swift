@@ -25,6 +25,7 @@ struct BackgroundView: View {
 
 struct TopView: View {
   @Binding var game: Game
+  @State private var leaderboardIsShowing = false
   
   var body: some View {
     HStack {
@@ -35,7 +36,16 @@ struct TopView: View {
       }
       // Spacer extends to use as much space as available
       Spacer()
-      RoundedImageViewFilled(systemName: "list.dash")
+      Button(action: {
+        leaderboardIsShowing = true
+      }) {
+        RoundedImageViewFilled(systemName: "list.dash")
+      }
+      // goes to different screen
+      // If $leaderboardIsShowing == true, then it will show the leaderboard screen. Else, not or it will close it.
+      .sheet(isPresented: $leaderboardIsShowing, onDismiss: {}, content: {
+        LeaderboardView(leaderboardIsShowing: $leaderboardIsShowing)
+      })
     }
   }
 }

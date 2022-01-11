@@ -86,17 +86,59 @@ struct ButtonText: View {
   }
 }
 
+struct ScoreText: View {
+  var score: Int
   
-  struct TextViews_Previews: PreviewProvider {
-    static var previews: some View {
-      VStack {
-        SliderLabelText(text: "Test")
-        InstructionText(text: "Instructions")
-        BigNumberText(text: "29")
-        LabelText(text: "Score")
-        BodyText(text: "You scored 200 Points\n🎉🎉🎉")
-        ButtonText(text: "Start New Round")
-      }
-      .padding()
-    }
+  var body: some View{
+    Text(String(score))
+      .font(.title3)
+      .bold()
+      .kerning(-0.2)
+      .foregroundColor(Color("TextColor"))
   }
+}
+
+struct DateText: View {
+  var date: Date
+  
+  var body: some View{
+    // initializer to enter a date
+    // shows the time that we got the score
+    Text(date, style: .time)
+      .font(.title3)
+      .bold()
+      .kerning(-0.2)
+      .foregroundColor(Color("TextColor"))
+  }
+}
+
+struct BigBoldText: View {
+  var text: String
+  
+  var body: some View{
+    // initializer to enter a date
+    // shows the time that we got the score
+    Text(text.uppercased())
+      .kerning(2)
+      .foregroundColor(Color("TextColor"))
+      .font(.title)
+      .fontWeight(.black)
+  }
+}
+
+struct TextViews_Previews: PreviewProvider {
+  static var previews: some View {
+    VStack {
+      SliderLabelText(text: "Test")
+      InstructionText(text: "Instructions")
+      BigNumberText(text: "29")
+      LabelText(text: "Score")
+      BodyText(text: "You scored 200 Points\n🎉🎉🎉")
+      ButtonText(text: "Start New Round")
+      ScoreText(score: 459)
+      DateText(date: Date())
+      BigBoldText(text: "Leaderboard")
+    }
+    .padding()
+  }
+}

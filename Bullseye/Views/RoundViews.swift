@@ -55,6 +55,20 @@ struct RoundRectTextView: View {
   
 }
 
+struct RoundedTextView: View {
+  let text: String
+  
+  var body: some View {
+    Text(text)
+      .font(.title)
+      .foregroundColor(Color("TextColor"))
+      .frame(width: Constants.General.roundedViewLength, height: Constants.General.roundedViewLength)
+      .overlay(
+        Circle().strokeBorder(Color("LeaderboardRowColor"), lineWidth: Constants.General.strokeWidth)
+      )
+  }
+}
+
 struct PreviewView: View {
   var body: some View{
     // you can put spacing (optional) instead of having to put padding one by one
@@ -62,6 +76,7 @@ struct PreviewView: View {
       RoundedImageViewStroked(systemName: "arrow.counterclockwise")
       RoundedImageViewFilled(systemName: "list.dash")
       RoundRectTextView(text: "999")
+      RoundedTextView(text: "1")
     }
   }
 }
