@@ -44,7 +44,7 @@ struct TopView: View {
       // goes to different screen
       // If $leaderboardIsShowing == true, then it will show the leaderboard screen. Else, not or it will close it.
       .sheet(isPresented: $leaderboardIsShowing, onDismiss: {}, content: {
-        LeaderboardView(leaderboardIsShowing: $leaderboardIsShowing)
+        LeaderboardView(leaderboardIsShowing: $leaderboardIsShowing, game: $game)
       })
     }
   }

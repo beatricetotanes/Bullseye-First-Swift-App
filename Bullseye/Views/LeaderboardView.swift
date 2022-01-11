@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LeaderboardView: View {
   @Binding var leaderboardIsShowing: Bool
+  @Binding var game: Game
   
   var body: some View {
     // Date() gives the current date and time
@@ -18,7 +19,16 @@ struct LeaderboardView: View {
       VStack(spacing: 10) {
         HeaderView(leaderboardIsShowing: $leaderboardIsShowing)
         LabelView()
-        RowView(index: 1, score: 10, date: Date())
+        // ScrollView contains the content and make it scrollable.
+        ScrollView {
+          VStack(spacing:10){
+            // "game.leaderboardEntries.indices" will return all the indices that exist in the array. We need access to that since we will display it.
+            ForEach(game.leaderboardEntries.indices){ i in
+              let leaderboardEntry = game.leaderboardEntries[i]
+              RowView(index: i+1, score: leaderboardEntry.score, date: leaderboardEntry.date)
+            }
+          }
+        }
       }
     }
   }
@@ -83,6 +93,7 @@ struct HeaderView: View {
         }
       }
     }
+    .padding(.top)
   }
 }
 
@@ -106,15 +117,16 @@ struct LabelView: View {
 
 struct LeaderboardView_Previews: PreviewProvider {
   static private var leaderboardIsShowing = Binding.constant(false)
+  static private var game = Binding.constant(Game(loadTestData: true))
   
   static var previews: some View {
-    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing)
+    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing, game: game)
       .preferredColorScheme(.light) // default
-    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing)
+    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing, game: game)
       .previewLayout(.fixed(width: 568, height: 320))
-    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing)
+    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing, game: game)
       .preferredColorScheme(.dark) // default
-    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing)
+    LeaderboardView(leaderboardIsShowing: leaderboardIsShowing, game: game)
       .preferredColorScheme(.dark)
       .previewLayout(.fixed(width: 568, height: 320))
   }
