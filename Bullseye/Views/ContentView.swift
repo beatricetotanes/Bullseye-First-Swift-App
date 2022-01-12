@@ -13,7 +13,7 @@ struct ContentView: View {
   
   // @State is a special keyword stating that this is a state variable
   // Whenever a state variable changes, SwiftUI will automatically recompute the body
-  // Each state variable will always have an initial value
+  // Each state variable will always have an initial value.f
   @State private var alertIsVisible = false
   @State private var sliderValue = 50.0
   @State private var game = Game()
